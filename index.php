@@ -1,27 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Página Inicial </title>
+<?php  
+/*
+    Route
+*/
 
-</head>
- <body>
-         <form action="cadastrar.php" method="POST" style="display: grid;max-width: 640px;">
-                <label for="nome"> Nome: </label>
-                <input type="text"     name="nome"  placeholder="Nome" value="">
+$route = new Route();
+echo $route->getView();
 
-                <br>
-                <label for="email"> E-mail: </label>
-                <input type="email"     name="email" placeholder="E-mail" value="">
+class Route {
+    public $url;
 
-                <br>
-                <label for="senha"> Senha: </label>
-                <input type="password" name="senha" placeholder="Senha" value="">
-                <br>
-                
-                <button type="submit"> Cadastrar </button>
-         </form>
-</body>
-</html>
+    public function __construct() {
+            $this->url = $_SERVER['REQUEST_URI'];  
+            $this->url = str_replace('almoxx/', '', $this->url);
+            return $this->url;
+    }
+
+    public function getView() {
+        $file = $this->url . ".php";
+        $file = $file == '/' ? $file = 'index.php' : $file = 'index.php';
+
+        if (file_exists(__DIR__ ."/view/". $file)):
+            return file_get_contents(__DIR__ . "/view/". $file);
+        endif;
+
+    }
+
+}
+
+
+
+
+
+
+
+
+?>
