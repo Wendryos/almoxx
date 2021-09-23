@@ -1,37 +1,18 @@
 <?php  
-/*
-    Route
-*/
-
+include_once __DIR__ . '/application/route/route.php';
 $route = new Route();
-echo $route->getView();
-
-class Route {
-    public $url;
-
-    public function __construct() {
-            $this->url = $_SERVER['REQUEST_URI'];  
-            $this->url = str_replace('almoxx/', '', $this->url);
-            return $this->url;
-    }
-
-    public function getView() {
-        $file = $this->url . ".php";
-        $file = $file == '/' ? $file = 'index.php' : $file = 'index.php';
-
-        if (file_exists(__DIR__ ."/view/". $file)):
-            return file_get_contents(__DIR__ . "/view/". $file);
-        endif;
-
-    }
-
-}
-
-
-
-
-
-
-
-
+$uri = $route->viewGet($_SERVER['REQUEST_URI']);
 ?>
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Página inicial </title>
+</head>
+ <body>
+         <div class="app"> <?= $uri ?>  </div>
+</body>
+</html>
